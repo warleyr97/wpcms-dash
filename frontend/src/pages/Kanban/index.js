@@ -1,14 +1,20 @@
-import React, { useState, useEffect, useReducer, useContext, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  useContext,
+  useCallback,
+} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import api from "../../services/api";
 import { AuthContext } from "../../context/Auth/AuthContext";
-import Board from 'react-trello';
+import Board from "react-trello";
 import { toast } from "react-toastify";
 import { i18n } from "../../translate/i18n";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { socketConnection } from "../../services/socket";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     alignItems: "center",
@@ -22,7 +28,6 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     borderRadius: "5px",
   },
-  
 }));
 
 const Kanban = () => {
@@ -33,11 +38,10 @@ const Kanban = () => {
   const [reloadData, setReloadData] = useState(false);
   const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
 
-
   const fetchTags = async () => {
     try {
       const response = await api.get("/tags/kanban");
-      const fetchedTags = response.data.lista || []; 
+      const fetchedTags = response.data.lista || [];
 
       setTags(fetchedTags);
 
@@ -53,23 +57,21 @@ const Kanban = () => {
   }, []);
 
   const [file, setFile] = useState({
-    lanes: []
+    lanes: [],
   });
-
 
   const [tickets, setTickets] = useState([]);
   const { user } = useContext(AuthContext);
   const { profile, queues } = user;
-  const jsonString = user.queues.map(queue => queue.UserQueue.queueId);
+  const jsonString = user.queues.map((queue) => queue.UserQueue.queueId);
 
   const fetchTickets = async (jsonString) => {
     try {
-      
       const { data } = await api.get("/ticket/kanban", {
         params: {
           queueIds: JSON.stringify(jsonString),
-          teste: true
-        }
+          teste: true,
+        },
       });
       setTickets(data.tickets);
     } catch (err) {
@@ -78,42 +80,78 @@ const Kanban = () => {
     }
   };
 
-
   const popularCards = (jsonString) => {
-    const filteredTickets = tickets.filter(ticket => ticket.tags.length === 0);
+    const filteredTickets = tickets.filter(
+      (ticket) => ticket.tags.length === 0
+    );
+
+    const closedTickets = tickets.filter(
+      (ticket) => ticket.tags.status === "closed"
+    );
 
     const lanes = [
       {
         id: "lane0",
         title: i18n.t("Em aberto"),
         label: "0",
-        cards: filteredTickets.map(ticket => ({
+        cards: filteredTickets.map((ticket) => ({
           id: ticket.id.toString(),
           label: "Ticket nº " + ticket.id.toString(),
           description: (
-              <div>
-                <p>
-                  {ticket.contact.number}
-                  <br />
-                  {ticket.lastMessage}
-                </p>
-                <button 
-                  className={classes.button} 
-                  onClick={() => {
-                    handleCardClick(ticket.uuid)
-                  }}>
-                    Ver Ticket
-                </button>
-              </div>
-            ),
+            <div>
+              <p>
+                {ticket.contact.number}
+                <br />
+                {ticket.lastMessage}
+              </p>
+              <button
+                className={classes.button}
+                onClick={() => {
+                  handleCardClick(ticket.uuid);
+                }}
+              >
+                Ver Ticket
+              </button>
+            </div>
+          ),
           title: ticket.contact.name,
           draggable: true,
           href: "/tickets/" + ticket.uuid,
         })),
       },
-      ...tags.map(tag => {
-        const filteredTickets = tickets.filter(ticket => {
-          const tagIds = ticket.tags.map(tag => tag.id);
+      {
+        id: "lane1",
+        title: i18n.t("Resolvidos"),
+        label: "1",
+        cards: closedTickets.map((ticket) => ({
+          id: ticket.id.toString(),
+          label: "Ticket nº " + ticket.id.toString(),
+          description: (
+            <div>
+              <p>
+                {ticket.contact.number}
+                <br />
+                {ticket.lastMessage}
+              </p>
+              <button
+                className={classes.button}
+                onClick={() => {
+                  handleCardClick(ticket.uuid);
+                }}
+              >
+                Ver Ticket
+              </button>
+            </div>
+          ),
+          title: ticket.contact.name,
+          draggable: true,
+          href: "/tickets/" + ticket.uuid,
+        })),
+      },
+      ,
+      ...tags.map((tag) => {
+        const filteredTickets = tickets.filter((ticket) => {
+          const tagIds = ticket.tags.map((tag) => tag.id);
           return tagIds.includes(tag.id);
         });
 
@@ -121,7 +159,7 @@ const Kanban = () => {
           id: tag.id.toString(),
           title: tag.name,
           label: tag.id.toString(),
-          cards: filteredTickets.map(ticket => ({
+          cards: filteredTickets.map((ticket) => ({
             id: ticket.id.toString(),
             label: "Ticket nº " + ticket.id.toString(),
             description: (
@@ -131,21 +169,21 @@ const Kanban = () => {
                   <br />
                   {ticket.lastMessage}
                 </p>
-                <button 
-                  className={classes.button} 
+                <button
+                  className={classes.button}
                   onClick={() => {
-                    
-                    handleCardClick(ticket.uuid)
-                  }}>
-                    Ver Ticket
+                    handleCardClick(ticket.uuid);
+                  }}
+                >
+                  Ver Ticket
                 </button>
               </div>
             ),
             title: ticket.contact.name,
             draggable: true,
-            href: "/tickets/" + ticket.uuid,          
+            href: "/tickets/" + ticket.uuid,
           })),
-          style: { backgroundColor: tag.color, color: "white" }
+          style: { backgroundColor: tag.color, color: "white" },
         };
       }),
     ];
@@ -153,23 +191,21 @@ const Kanban = () => {
     setFile({ lanes });
   };
 
-  const handleCardClick = (uuid) => {  
+  const handleCardClick = (uuid) => {
     //console.log("Clicked on card with UUID:", uuid);
-    history.push('/tickets/' + uuid);
+    history.push("/tickets/" + uuid);
   };
 
   useEffect(() => {
     popularCards(jsonString);
-}, [tags, tickets, reloadData]);
+  }, [tags, tickets, reloadData]);
 
   const handleCardMove = async (cardId, sourceLaneId, targetLaneId) => {
     try {
-        
-          await api.delete(`/ticket-tags/${targetLaneId}`);
-        toast.success('Ticket Tag Removido!');
-          await api.put(`/ticket-tags/${targetLaneId}/${sourceLaneId}`);
-        toast.success('Ticket Tag Adicionado com Sucesso!');
-
+      await api.delete(`/ticket-tags/${targetLaneId}`);
+      toast.success("Ticket Tag Removido!");
+      await api.put(`/ticket-tags/${targetLaneId}/${sourceLaneId}`);
+      toast.success("Ticket Tag Adicionado com Sucesso!");
     } catch (err) {
       console.log(err);
     }
@@ -177,14 +213,13 @@ const Kanban = () => {
 
   return (
     <div className={classes.root}>
-      <Board 
-		data={file} 
-		onCardMoveAcrossLanes={handleCardMove}
-		style={{backgroundColor: 'rgba(252, 252, 252, 0.03)'}}
-    />
+      <Board
+        data={file}
+        onCardMoveAcrossLanes={handleCardMove}
+        style={{ backgroundColor: "rgba(252, 252, 252, 0.03)" }}
+      />
     </div>
   );
 };
-
 
 export default Kanban;
