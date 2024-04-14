@@ -48,7 +48,7 @@ const ListTicketsServiceKanban = async ({
   companyId
 }: Request): Promise<Response> => {
   let whereCondition: Filterable["where"] = {
-    [Op.or]: [{ userId }, { status: "pending" }],
+    [Op.or]: [{ userId }, { status: ["pending", "closed"] }],
     queueId: { [Op.or]: [queueIds, null] }
   };
   let includeCondition: Includeable[];

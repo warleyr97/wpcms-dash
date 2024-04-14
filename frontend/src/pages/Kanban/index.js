@@ -92,7 +92,7 @@ const Kanban = () => {
     const lanes = [
       {
         id: "lane0",
-        title: i18n.t("Em aberto"),
+        title: i18n.t("Sem categoria"),
         label: "0",
         cards: filteredTickets.map((ticket) => ({
           id: ticket.id.toString(),
@@ -119,36 +119,7 @@ const Kanban = () => {
           href: "/tickets/" + ticket.uuid,
         })),
       },
-      {
-        id: "lane1",
-        title: i18n.t("Resolvidos"),
-        label: "1",
-        cards: closedTickets.map((ticket) => ({
-          id: ticket.id.toString(),
-          label: "Ticket nº " + ticket.id.toString(),
-          description: (
-            <div>
-              <p>
-                {ticket.contact.number}
-                <br />
-                {ticket.lastMessage}
-              </p>
-              <button
-                className={classes.button}
-                onClick={() => {
-                  handleCardClick(ticket.uuid);
-                }}
-              >
-                Ver Ticket
-              </button>
-            </div>
-          ),
-          title: ticket.contact.name,
-          draggable: true,
-          href: "/tickets/" + ticket.uuid,
-        })),
-      },
-      ,
+
       ...tags.map((tag) => {
         const filteredTickets = tickets.filter((ticket) => {
           const tagIds = ticket.tags.map((tag) => tag.id);
