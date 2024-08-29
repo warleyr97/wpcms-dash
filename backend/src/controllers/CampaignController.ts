@@ -4,7 +4,6 @@ import { getIO } from "../libs/socket";
 import { head } from "lodash";
 import fs from "fs";
 import path from "path";
-import { File } from 'multer';
 
 import ListService from "../services/CampaignService/ListService";
 import CreateService from "../services/CampaignService/CreateService";
@@ -23,6 +22,7 @@ import Ticket from "../models/Ticket";
 import Contact from "../models/Contact";
 import ContactList from "../models/ContactList";
 import ContactListItem from "../models/ContactListItem";
+import { File } from "../@types/customFile";
 
 type IndexQuery = {
   searchParam: string;

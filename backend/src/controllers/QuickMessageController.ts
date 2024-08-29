@@ -15,9 +15,9 @@ import { head } from "lodash";
 import fs from "fs";
 import path from "path";
 
-import { File } from 'multer';
 
 import AppError from "../errors/AppError";
+import { File } from "../@types/customFile";
 
 type IndexQuery = {
   searchParam: string;

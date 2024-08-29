@@ -14,6 +14,7 @@ import ContactList from "../models/ContactList";
 
 import AppError from "../errors/AppError";
 import { ImportContacts } from "../services/ContactListService/ImportContacts";
+import { File } from "../@types/customFile";
 
 type IndexQuery = {
   searchParam: string;

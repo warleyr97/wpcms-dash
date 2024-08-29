@@ -6,7 +6,6 @@ import fs from "fs";
 import path from "path";
 
 
-import { File } from 'multer';
 
 import ListService from "../services/AnnouncementService/ListService";
 import CreateService from "../services/AnnouncementService/CreateService";
@@ -18,6 +17,7 @@ import FindService from "../services/AnnouncementService/FindService";
 import Announcement from "../models/Announcement";
 
 import AppError from "../errors/AppError";
+import { File } from "../@types/customFile";
 
 type IndexQuery = {
   searchParam: string;
