@@ -12,7 +12,7 @@ import Schedule from "../models/Schedule";
 import path from "path";
 import fs from "fs";
 import { head } from "lodash";
-import { File } from "../@types/customFile";
+import multer, { File as MulterFile } from 'multer';
 
 type IndexQuery = {
   searchParam?: string;

@@ -14,7 +14,7 @@ import DeleteAllService from "../services/FileServices/DeleteAllService";
 import ShowTicketService from "../services/TicketServices/ShowTicketService";
 import UpdateTicketService from "../services/TicketServices/UpdateTicketService";
 import FilesOptions from "../models/FilesOptions";
-import { File } from "../@types/customFile";
+import multer, { File as MulterFile } from 'multer';
 
 type IndexQuery = {
   searchParam?: string;

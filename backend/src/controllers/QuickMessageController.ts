@@ -17,7 +17,7 @@ import path from "path";
 
 
 import AppError from "../errors/AppError";
-import { File } from "../@types/customFile";
+import multer, { File as MulterFile } from 'multer';
 
 type IndexQuery = {
   searchParam: string;
