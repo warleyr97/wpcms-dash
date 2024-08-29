@@ -9,8 +9,8 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "multer"],
-    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "types": ["node", "express"],
+    "typeRoots": ["./node_modules/@types"],
     "esModuleInterop": true
   }
 }
