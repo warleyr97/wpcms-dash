@@ -5,7 +5,6 @@
     "outDir": "./dist",
     "strict": false,
     "strictPropertyInitialization": false,
-    "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
