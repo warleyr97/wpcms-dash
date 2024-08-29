@@ -22,7 +22,9 @@ import Ticket from "../models/Ticket";
 import Contact from "../models/Contact";
 import ContactList from "../models/ContactList";
 import ContactListItem from "../models/ContactListItem";
-import { File } from "../@types/customFile";
+
+import multer, { File as MulterFile } from 'multer';
+
 
 type IndexQuery = {
   searchParam: string;
