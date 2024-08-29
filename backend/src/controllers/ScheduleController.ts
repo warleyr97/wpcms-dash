@@ -12,6 +12,7 @@ import Schedule from "../models/Schedule";
 import path from "path";
 import fs from "fs";
 import { head } from "lodash";
+import { File } from 'multer';
 
 type IndexQuery = {
   searchParam?: string;
@@ -116,12 +117,12 @@ export const mediaUpload = async (
   res: Response
 ): Promise<Response> => {
   const { id } = req.params;
-  const files = req.files as Express.Multer.File[];
+  const files = req.files as File[];
   const file = head(files);
 
   try {
     const schedule = await Schedule.findByPk(id);
-    schedule.mediaPath = file.filename;
+    schedule.mediaPath = Filename;
     schedule.mediaName = file.originalname;
 
     await schedule.save();

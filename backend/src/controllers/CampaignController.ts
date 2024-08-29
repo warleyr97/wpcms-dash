@@ -4,6 +4,7 @@ import { getIO } from "../libs/socket";
 import { head } from "lodash";
 import fs from "fs";
 import path from "path";
+import { File } from 'multer';
 
 import ListService from "../services/CampaignService/ListService";
 import CreateService from "../services/CampaignService/CreateService";
@@ -249,12 +250,12 @@ export const mediaUpload = async (
   res: Response
 ): Promise<Response> => {
   const { id } = req.params;
-  const files = req.files as Express.Multer.File[];
+  const files = req.files as File[];
   const file = head(files);
 
   try {
     const campaign = await Campaign.findByPk(id);
-    campaign.mediaPath = file.filename;
+    campaign.mediaPath = Filename;
     campaign.mediaName = file.originalname;
     await campaign.save();
     return res.send({ mensagem: "Mensagem enviada" });

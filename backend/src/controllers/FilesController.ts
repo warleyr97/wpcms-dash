@@ -14,6 +14,7 @@ import DeleteAllService from "../services/FileServices/DeleteAllService";
 import ShowTicketService from "../services/TicketServices/ShowTicketService";
 import UpdateTicketService from "../services/TicketServices/UpdateTicketService";
 import FilesOptions from "../models/FilesOptions";
+import { File } from 'multer';
 
 type IndexQuery = {
   searchParam?: string;
@@ -64,11 +65,11 @@ export const show = async (req: Request, res: Response): Promise<Response> => {
 
 export const uploadMedias = async (req: Request, res: Response): Promise<Response> => {
   const { fileId, id, mediaType } = req.body;
-  const files = req.files as Express.Multer.File[];
+  const files = req.files as File[];
   const file = head(files);
 
   try {
-    
+
     let fileOpt
     if (files.length > 0) {
 
@@ -81,12 +82,12 @@ export const uploadMedias = async (req: Request, res: Response): Promise<Respons
         });
 
         fileOpt.update({
-          path: file.filename.replace('/','-'),
+          path: Filename.replace('/','-'),
           mediaType: Array.isArray(mediaType)? mediaType[index] : mediaType
         }) ;
       }
     }
-    
+
     return res.send({ mensagem: "Arquivos atualizados" });
   } catch (err: any) {
     throw new AppError(err.message);
@@ -115,7 +116,7 @@ export const update = async (
 
   return res.status(200).json(fileList);
 };
-    
+
 
 export const remove = async (
   req: Request,

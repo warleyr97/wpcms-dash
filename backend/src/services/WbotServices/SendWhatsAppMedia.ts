@@ -11,7 +11,7 @@ import mime from "mime-types";
 import formatBody from "../../helpers/Mustache";
 
 interface Request {
-  media: Express.Multer.File;
+  media: File;
   ticket: Ticket;
   body?: string;
 }
