@@ -4,6 +4,7 @@ import { getIO } from "../libs/socket";
 import { head } from "lodash";
 import fs from "fs";
 import path from "path";
+import multer, { File as MulterFile } from 'multer';
 
 
 
@@ -17,7 +18,6 @@ import FindService from "../services/AnnouncementService/FindService";
 import Announcement from "../models/Announcement";
 
 import AppError from "../errors/AppError";
-import { File } from "../@types/customFile";
 
 type IndexQuery = {
   searchParam: string;

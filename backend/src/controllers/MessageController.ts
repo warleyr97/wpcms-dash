@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import AppError from "../errors/AppError";
-import { File } from 'multer';
+import multer, { File as MulterFile } from 'multer';
 
 import SetTicketMessagesAsRead from "../helpers/SetTicketMessagesAsRead";
 import { getIO } from "../libs/socket";

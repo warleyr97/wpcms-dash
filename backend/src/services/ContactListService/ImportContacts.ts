@@ -4,6 +4,8 @@ import { has } from "lodash";
 import ContactListItem from "../../models/ContactListItem";
 import CheckContactNumber from "../WbotServices/CheckNumber";
 import { logger } from "../../utils/logger";
+import multer, { File as MulterFile } from 'multer';
+
 // import CheckContactNumber from "../WbotServices/CheckNumber";
 
 export async function ImportContacts(
