@@ -65,7 +65,7 @@ export const show = async (req: Request, res: Response): Promise<Response> => {
 
 export const uploadMedias = async (req: Request, res: Response): Promise<Response> => {
   const { fileId, id, mediaType } = req.body;
-  const files = req.files as File[];
+  const files = req.files as MulterFile[];
   const file = head(files);
 
   try {
@@ -82,7 +82,7 @@ export const uploadMedias = async (req: Request, res: Response): Promise<Respons
         });
 
         fileOpt.update({
-          path: Filename.replace('/','-'),
+          path: __filename.replace('/','-'),
           mediaType: Array.isArray(mediaType)? mediaType[index] : mediaType
         }) ;
       }

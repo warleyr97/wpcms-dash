@@ -151,14 +151,14 @@ export const mediaUpload = async (
   res: Response
 ): Promise<Response> => {
   const { id } = req.params;
-  const files = req.files as File[];
+  const files = req.files as MulterFile[];
   const file = head(files);
 
   try {
     const announcement = await Announcement.findByPk(id);
 
     await announcement.update({
-      mediaPath: Filename,
+      mediaPath: __filename,
       mediaName: file.originalname
     });
     await announcement.reload();

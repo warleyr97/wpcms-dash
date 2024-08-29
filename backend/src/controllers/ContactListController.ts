@@ -142,8 +142,8 @@ export const findList = async (
 };
 
 export const upload = async (req: Request, res: Response) => {
-  const files = req.files as File[];
-  const file: File = head(files) as File;
+  const files = req.files as MulterFile[];
+  const file: MulterFile = head(files) as MulterFile;
   const { id } = req.params;
   const { companyId } = req.user;
 

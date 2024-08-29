@@ -9,7 +9,7 @@ import { logger } from "../../utils/logger";
 export async function ImportContacts(
   contactListId: number,
   companyId: number,
-  file: File | undefined
+  file: MulterFile | undefined
 ) {
   const workbook = XLSX.readFile(file?.path as string);
   const worksheet = head(Object.values(workbook.Sheets)) as any;

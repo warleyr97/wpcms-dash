@@ -1,5 +1,5 @@
 import path from "path";
-import multer from "multer";
+import multer, { File as MulterFile } from 'multer';
 import fs from "fs";
 
 const publicFolder = path.resolve(__dirname, "..", "..", "public");
@@ -9,18 +9,18 @@ export default {
   storage: multer.diskStorage({
     destination: async function (req, file, cb) {
 
-      const { typeArch, fileId } = req.body;      
+      const { typeArch, fileId } = req.body;
 
       let folder;
 
       if (typeArch && typeArch !== "announcements") {
-        folder =  path.resolve(publicFolder , typeArch, fileId ? fileId : "") 
+        folder =  path.resolve(publicFolder , typeArch, fileId ? fileId : "")
       } else if (typeArch && typeArch === "announcements") {
-        folder =  path.resolve(publicFolder , typeArch) 
+        folder =  path.resolve(publicFolder , typeArch)
       }
       else
       {
-        folder =  path.resolve(publicFolder) 
+        folder =  path.resolve(publicFolder)
       }
 
       if (!fs.existsSync(folder)) {

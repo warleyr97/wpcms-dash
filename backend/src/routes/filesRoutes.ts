@@ -1,7 +1,7 @@
 import express from "express";
 import isAuth from "../middleware/isAuth";
 import uploadConfig from "../config/upload";
-import multer from "multer";
+import multer, { File as MulterFile } from 'multer';
 
 import * as FilesController from "../controllers/FilesController";
 

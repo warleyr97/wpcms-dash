@@ -250,12 +250,12 @@ export const mediaUpload = async (
   res: Response
 ): Promise<Response> => {
   const { id } = req.params;
-  const files = req.files as File[];
+  const files = req.files as MulterFile[];
   const file = head(files);
 
   try {
     const campaign = await Campaign.findByPk(id);
-    campaign.mediaPath = Filename;
+    campaign.mediaPath = __filename;
     campaign.mediaName = file.originalname;
     await campaign.save();
     return res.send({ mensagem: "Mensagem enviada" });

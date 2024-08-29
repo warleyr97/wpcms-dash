@@ -64,7 +64,7 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 export const store = async (req: Request, res: Response): Promise<Response> => {
   const { ticketId } = req.params;
   const { body, quotedMsg }: MessageData = req.body;
-  const medias = req.files as File[];
+  const medias = req.files as MulterFile[];
   const { companyId } = req.user;
 
   const ticket = await ShowTicketService(ticketId, companyId);
@@ -73,7 +73,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
 
   if (medias) {
     await Promise.all(
-      medias.map(async (media: File, index) => {
+      medias.map(async (media: MulterFile, index) => {
         await SendWhatsAppMedia({ media, ticket, body: Array.isArray(body) ? body[index] : body });
       })
     );
@@ -105,7 +105,7 @@ export const remove = async (
 export const send = async (req: Request, res: Response): Promise<Response> => {
   const { whatsappId } = req.params as unknown as { whatsappId: number };
   const messageData: MessageData = req.body;
-  const medias = req.files as File[];
+  const medias = req.files as MulterFile[];
 
   try {
     const whatsapp = await Whatsapp.findByPk(whatsappId);
@@ -143,7 +143,7 @@ export const send = async (req: Request, res: Response): Promise<Response> => {
 
     if (medias) {
       await Promise.all(
-        medias.map(async (media: File) => {
+        medias.map(async (media: MulterFile) => {
           await req.app.get("queues").messageQueue.add(
             "SendMessage",
             {
