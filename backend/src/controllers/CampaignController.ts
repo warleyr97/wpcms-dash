@@ -23,9 +23,6 @@ import Contact from "../models/Contact";
 import ContactList from "../models/ContactList";
 import ContactListItem from "../models/ContactListItem";
 
-import multer, { File as MulterFile } from 'multer';
-
-
 type IndexQuery = {
   searchParam: string;
   pageNumber: string;
@@ -252,12 +249,12 @@ export const mediaUpload = async (
   res: Response
 ): Promise<Response> => {
   const { id } = req.params;
-  const files = req.files as MulterFile[];
+  const files = req.files as Express.Multer.File[];
   const file = head(files);
 
   try {
     const campaign = await Campaign.findByPk(id);
-    campaign.mediaPath = __filename;
+    campaign.mediaPath = file.filename;
     campaign.mediaName = file.originalname;
     await campaign.save();
     return res.send({ mensagem: "Mensagem enviada" });

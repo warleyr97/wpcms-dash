@@ -15,9 +15,7 @@ import { head } from "lodash";
 import fs from "fs";
 import path from "path";
 
-
 import AppError from "../errors/AppError";
-import multer, { File as MulterFile } from 'multer';
 
 type IndexQuery = {
   searchParam: string;
@@ -156,14 +154,14 @@ export const mediaUpload = async (
   res: Response
 ): Promise<Response> => {
   const { id } = req.params;
-  const files = req.files as MulterFile[];
+  const files = req.files as Express.Multer.File[];
   const file = head(files);
 
   try {
     const quickmessage = await QuickMessage.findByPk(id);
-
+    
     quickmessage.update ({
-      mediaPath: __filename,
+      mediaPath: file.filename,
       mediaName: file.originalname
     });
 

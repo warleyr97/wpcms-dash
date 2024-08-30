@@ -1,5 +1,5 @@
 import { Router } from "express";
-import multer, { File as MulterFile } from 'multer';
+import multer from "multer";
 import isAuth from "../middleware/isAuth";
 import uploadConfig from "../config/upload";
 import tokenAuth from "../middleware/tokenAuth";

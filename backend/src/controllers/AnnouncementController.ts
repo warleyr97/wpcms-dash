@@ -4,9 +4,6 @@ import { getIO } from "../libs/socket";
 import { head } from "lodash";
 import fs from "fs";
 import path from "path";
-import multer, { File as MulterFile } from 'multer';
-
-
 
 import ListService from "../services/AnnouncementService/ListService";
 import CreateService from "../services/AnnouncementService/CreateService";
@@ -151,14 +148,14 @@ export const mediaUpload = async (
   res: Response
 ): Promise<Response> => {
   const { id } = req.params;
-  const files = req.files as MulterFile[];
+  const files = req.files as Express.Multer.File[];
   const file = head(files);
 
   try {
     const announcement = await Announcement.findByPk(id);
 
     await announcement.update({
-      mediaPath: __filename,
+      mediaPath: file.filename,
       mediaName: file.originalname
     });
     await announcement.reload();

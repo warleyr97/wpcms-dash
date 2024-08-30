@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import AppError from "../errors/AppError";
-import multer, { File as MulterFile } from 'multer';
 
 import SetTicketMessagesAsRead from "../helpers/SetTicketMessagesAsRead";
 import { getIO } from "../libs/socket";
@@ -64,7 +63,7 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 export const store = async (req: Request, res: Response): Promise<Response> => {
   const { ticketId } = req.params;
   const { body, quotedMsg }: MessageData = req.body;
-  const medias = req.files as MulterFile[];
+  const medias = req.files as Express.Multer.File[];
   const { companyId } = req.user;
 
   const ticket = await ShowTicketService(ticketId, companyId);
@@ -73,7 +72,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
 
   if (medias) {
     await Promise.all(
-      medias.map(async (media: MulterFile, index) => {
+      medias.map(async (media: Express.Multer.File, index) => {
         await SendWhatsAppMedia({ media, ticket, body: Array.isArray(body) ? body[index] : body });
       })
     );
@@ -105,7 +104,7 @@ export const remove = async (
 export const send = async (req: Request, res: Response): Promise<Response> => {
   const { whatsappId } = req.params as unknown as { whatsappId: number };
   const messageData: MessageData = req.body;
-  const medias = req.files as MulterFile[];
+  const medias = req.files as Express.Multer.File[];
 
   try {
     const whatsapp = await Whatsapp.findByPk(whatsappId);
@@ -143,7 +142,7 @@ export const send = async (req: Request, res: Response): Promise<Response> => {
 
     if (medias) {
       await Promise.all(
-        medias.map(async (media: MulterFile) => {
+        medias.map(async (media: Express.Multer.File) => {
           await req.app.get("queues").messageQueue.add(
             "SendMessage",
             {
@@ -177,7 +176,7 @@ export const send = async (req: Request, res: Response): Promise<Response> => {
         });
       }, 1000);
     }
-
+    
     SetTicketMessagesAsRead(ticket);
 
     return res.send({ mensagem: "Mensagem enviada" });

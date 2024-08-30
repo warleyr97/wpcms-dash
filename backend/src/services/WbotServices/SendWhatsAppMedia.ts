@@ -9,11 +9,9 @@ import GetTicketWbot from "../../helpers/GetTicketWbot";
 import Ticket from "../../models/Ticket";
 import mime from "mime-types";
 import formatBody from "../../helpers/Mustache";
-import multer, { File as MulterFile } from 'multer';
-
 
 interface Request {
-  media: MulterFile;
+  media: Express.Multer.File;
   ticket: Ticket;
   body?: string;
 }

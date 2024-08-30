@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm install express cors cookie-parser dotenv yup lodash multer @types/node @types/express @types/cors @types/cookie-parser @types/yup @types/lodash @types/multer sequelize sequelize-cli && npm install --save-dev @types/multer && tsc",
+    "build": "tsc",
     "watch": "tsc -w",
-    "start": "node dist/server.js",
+    "start": "nodemon dist/server.js",
     "dev:server": "ts-node-dev --respawn --transpile-only --ignore node_modules src/server.ts",
     "db:migrate": "npx sequelize db:migrate",
     "db:seed": "sequelize db:seed:all",
