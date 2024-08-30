@@ -256,33 +256,33 @@ const LoggedInLayout = ({ children, themeToggle }) => {
     }
   }, [drawerOpen]);
 
-  useEffect(() => {
-    const companyId = localStorage.getItem("companyId");
-    const userId = localStorage.getItem("userId");
+  // useEffect(() => {
+  //   const companyId = localStorage.getItem("companyId");
+  //   const userId = localStorage.getItem("userId");
 
-    const socket = socketConnection({ companyId });
+  //   const socket = socketConnection({ companyId });
 
-    socket.on(`company-${companyId}-auth`, (data) => {
-      if (data.user.id === +userId) {
-        toastError("Sua conta foi acessada em outro computador.");
-        setTimeout(() => {
-          localStorage.clear();
-          window.location.reload();
-        }, 1000);
-      }
-    });
+  //   socket.on(`company-${companyId}-auth`, (data) => {
+  //     if (data.user.id === +userId) {
+  //       toastError("Sua conta foi acessada em outro computador.");
+  //       setTimeout(() => {
+  //         localStorage.clear();
+  //         window.location.reload();
+  //       }, 1000);
+  //     }
+  //   });
 
-    socket.emit("userStatus");
-    const interval = setInterval(() => {
-      socket.emit("userStatus");
-    }, 1000 * 60 * 5);
+  //   socket.emit("userStatus");
+  //   const interval = setInterval(() => {
+  //     socket.emit("userStatus");
+  //   }, 1000 * 60 * 5);
 
-    return () => {
-      socket.disconnect();
-      clearInterval(interval);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   return () => {
+  //     socket.disconnect();
+  //     clearInterval(interval);
+  //   };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
