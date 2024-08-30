@@ -22,6 +22,7 @@ import Ticket from "../models/Ticket";
 import Contact from "../models/Contact";
 import ContactList from "../models/ContactList";
 import ContactListItem from "../models/ContactListItem";
+import { File } from "../@types/customFile";
 
 type IndexQuery = {
   searchParam: string;
@@ -249,7 +250,7 @@ export const mediaUpload = async (
   res: Response
 ): Promise<Response> => {
   const { id } = req.params;
-  const files = req.files as Express.Multer.File[];
+  const files = req.files as File[];
   const file = head(files);
 
   try {

@@ -20,6 +20,7 @@ import CheckContactNumber from "../services/WbotServices/CheckNumber";
 import CheckIsValidContact from "../services/WbotServices/CheckIsValidContact";
 import GetProfilePicUrl from "../services/WbotServices/GetProfilePicUrl";
 import CreateOrUpdateContactService from "../services/ContactServices/CreateOrUpdateContactService";
+import { File } from "../@types/customFile";
 type IndexQuery = {
   pageNumber: string;
 };
@@ -63,7 +64,7 @@ export const index = async (req: Request, res: Response): Promise<Response> => {
 export const store = async (req: Request, res: Response): Promise<Response> => {
   const { ticketId } = req.params;
   const { body, quotedMsg }: MessageData = req.body;
-  const medias = req.files as Express.Multer.File[];
+  const medias = req.files as File[];
   const { companyId } = req.user;
 
   const ticket = await ShowTicketService(ticketId, companyId);
@@ -72,7 +73,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
 
   if (medias) {
     await Promise.all(
-      medias.map(async (media: Express.Multer.File, index) => {
+      medias.map(async (media: File, index) => {
         await SendWhatsAppMedia({ media, ticket, body: Array.isArray(body) ? body[index] : body });
       })
     );
@@ -104,7 +105,7 @@ export const remove = async (
 export const send = async (req: Request, res: Response): Promise<Response> => {
   const { whatsappId } = req.params as unknown as { whatsappId: number };
   const messageData: MessageData = req.body;
-  const medias = req.files as Express.Multer.File[];
+  const medias = req.files as File[];
 
   try {
     const whatsapp = await Whatsapp.findByPk(whatsappId);
@@ -142,7 +143,7 @@ export const send = async (req: Request, res: Response): Promise<Response> => {
 
     if (medias) {
       await Promise.all(
-        medias.map(async (media: Express.Multer.File) => {
+        medias.map(async (media: File) => {
           await req.app.get("queues").messageQueue.add(
             "SendMessage",
             {
@@ -176,7 +177,7 @@ export const send = async (req: Request, res: Response): Promise<Response> => {
         });
       }, 1000);
     }
-    
+
     SetTicketMessagesAsRead(ticket);
 
     return res.send({ mensagem: "Mensagem enviada" });

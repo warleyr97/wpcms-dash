@@ -4,12 +4,13 @@ import { has } from "lodash";
 import ContactListItem from "../../models/ContactListItem";
 import CheckContactNumber from "../WbotServices/CheckNumber";
 import { logger } from "../../utils/logger";
+import { File } from "../../@types/customFile";
 // import CheckContactNumber from "../WbotServices/CheckNumber";
 
 export async function ImportContacts(
   contactListId: number,
   companyId: number,
-  file: Express.Multer.File | undefined
+  file: File | undefined
 ) {
   const workbook = XLSX.readFile(file?.path as string);
   const worksheet = head(Object.values(workbook.Sheets)) as any;

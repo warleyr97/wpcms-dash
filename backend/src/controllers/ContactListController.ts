@@ -14,6 +14,7 @@ import ContactList from "../models/ContactList";
 
 import AppError from "../errors/AppError";
 import { ImportContacts } from "../services/ContactListService/ImportContacts";
+import { File } from "../@types/customFile";
 
 type IndexQuery = {
   searchParam: string;
@@ -141,8 +142,8 @@ export const findList = async (
 };
 
 export const upload = async (req: Request, res: Response) => {
-  const files = req.files as Express.Multer.File[];
-  const file: Express.Multer.File = head(files) as Express.Multer.File;
+  const files = req.files as File[];
+  const file: File = head(files) as File;
   const { id } = req.params;
   const { companyId } = req.user;
 
