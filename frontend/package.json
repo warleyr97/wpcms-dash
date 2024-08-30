@@ -56,7 +56,7 @@
     "yup": "^0.32.8"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "serve -s build",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "builddev": "react-scripts build",
     "test": "react-scripts test",
