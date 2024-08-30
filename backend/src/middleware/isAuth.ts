@@ -16,11 +16,10 @@ interface TokenPayload {
 const isAuth = (req: Request, res: Response, next: NextFunction): void => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     throw new AppError("ERR_SESSION_EXPIRED", 401);
   }
-
-  const [, token] = authHeader.split(" ");
+  const token = authHeader.split(' ')[1];
 
   try {
     const decoded = verify(token, authConfig.secret);
