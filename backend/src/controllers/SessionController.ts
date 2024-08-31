@@ -38,7 +38,7 @@ export const update = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const token: string = req.cookies.jrt;
+  const token: string = res.cookies.jrt;
 
   console.log("TOKEN", token);
 
@@ -57,7 +57,7 @@ export const update = async (
 };
 
 export const me = async (req: Request, res: Response): Promise<Response> => {
-  const token: string = req.cookies.jrt;
+  const token: string = res.cookies.jrt;
   const user = await FindUserFromToken(token);
   const { id, profile, super: superAdmin } = user;
 
