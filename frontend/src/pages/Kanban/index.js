@@ -93,7 +93,7 @@ const Kanban = () => {
       {
         id: "lane0",
         title: i18n.t("Sem categoria"),
-        label: "0",
+        label: !!filteredTickets ? filteredTickets.length : 0,
         cards: filteredTickets.map((ticket) => ({
           id: ticket.id.toString(),
           label: "Ticket nº " + ticket.id.toString(),
@@ -110,7 +110,7 @@ const Kanban = () => {
                   handleCardClick(ticket.uuid);
                 }}
               >
-                Ver Ticket
+                Ver Chat
               </button>
             </div>
           ),
@@ -129,7 +129,7 @@ const Kanban = () => {
         return {
           id: tag.id.toString(),
           title: tag.name,
-          label: tag.id.toString(),
+          label: !!filteredTickets ? filteredTickets.length : 0,
           cards: filteredTickets.map((ticket) => ({
             id: ticket.id.toString(),
             label: "Ticket nº " + ticket.id.toString(),
@@ -146,7 +146,7 @@ const Kanban = () => {
                     handleCardClick(ticket.uuid);
                   }}
                 >
-                  Ver Ticket
+                  Ver Chat
                 </button>
               </div>
             ),
