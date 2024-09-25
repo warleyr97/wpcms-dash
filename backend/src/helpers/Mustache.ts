@@ -54,7 +54,7 @@ export default (body: string, contact: Contact): string => {
     hora
   };
 
-  console.log("Before rendering:", view);
+  console.log("Before rendering:", body);
   const rendered = Mustache.render(body, view);
   console.log("After rendering:", rendered);
   // return Mustache.render(body, view);
